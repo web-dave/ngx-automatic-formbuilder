@@ -27,24 +27,24 @@ In my example i us this:
 
 ### FormSettings
 
-```json
+```ts
 settings: IFormSettings = {
-    user: [
-      '',
-      [Validators.required],
-      [],
-      { type: 'text', errormsg: { required: 'User is required!' } }
-    ],
-    company: {
-      name: ['', []],
-      url: ['', []],
-      address: {
-        street: [''],
-        city: [''],
-        zip: ['']
-      }
+  user: [
+    '',
+    [Validators.required],
+    [],
+    { type: 'text', errormsg: { required: 'User is required!' } }
+  ],
+  company: {
+    name: ['', []],
+    url: ['', []],
+    address: {
+      street: [''],
+      city: [''],
+      zip: ['']
     }
-  };
+  }
+};
 ```
 
 You can add the highly needed information to each FormControl to autogenerate the form in your template.
