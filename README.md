@@ -1,27 +1,90 @@
-# Formbuilder
+# NgxAutomaticFormbuilder
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.2.
+This is a Extended FormBuilder.
+You can Pass in a Config object and it generates a FormGroup.
 
-## Development server
+## How to install
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+tbd.
 
-## Code scaffolding
+## How to use
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+The config object looks similar to the FormBuilder config
 
-## Build
+### IFormSettings
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+```ts
+export interface IFormSettings {
+  [key: string]:
+    | [any, ValidatorFn[]?, AsyncValidatorFn[]?, IExtFormControlSettings?]
+    | IFormSettings;
+}
+```
 
-## Running unit tests
+It can Handle SubGroups as well.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+In my example i us this:
 
-## Running end-to-end tests
+### FormSettings
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+```json
+settings: IFormSettings = {
+    user: [
+      '',
+      [Validators.required],
+      [],
+      { type: 'text', errormsg: { required: 'User is required!' } }
+    ],
+    company: {
+      name: ['', []],
+      url: ['', []],
+      address: {
+        street: [''],
+        city: [''],
+        zip: ['']
+      }
+    }
+  };
+```
 
-## Further help
+You can add the highly needed information to each FormControl to autogenerate the form in your template.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+### IExtFormControl
+
+```ts
+export interface IExtFormControl extends FormControl {
+  errormsg: {
+    [key: string]: string;
+  };
+  type: string;
+  label: string;
+}
+```
+
+And in your template you can use this like this
+
+### Template use
+
+```html
+<form [formGroup]="myForm">
+  <div class="form-group" *ngFor="let itm of dynKeys">
+    <div *ngIf="!myForm.get(itm).controls">
+      <label [for]="itm">{{ itm }}</label>
+      <input
+        [type]="myForm.get(itm)?.type"
+        [id]="itm"
+        [formControlName]="itm"
+      />
+      <div [hidden]="!myForm.get(itm).hasError('required')">
+        {{ myForm.get(itm).errormsg?.required }}
+      </div>
+    </div>
+  </div>
+</form>
+```
+
+Maybe this is helpfull in some way.
+TI know there are no tests at all.
+I will add them by time.
+
+# contribution is very wellcome!
