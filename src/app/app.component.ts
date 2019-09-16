@@ -19,7 +19,8 @@ export class AppComponent {
     title: [
       '',
       [Validators.required],
-      { type: 'text', errormsg: { required: 'Title is required!' } }
+      [],
+      { type: 'number', errormsg: { required: 'Title is required!' } }
     ],
     subtitle: ['', []],
     isbn: ['', []],
@@ -38,6 +39,7 @@ export class AppComponent {
   };
   constructor(private builder: DynamicFormBuilder) {
     this.myForm = builder.setupForm(this.settings);
+    console.log(this.myForm);
     this.dynKeys = Object.keys(this.myForm.controls);
   }
 }

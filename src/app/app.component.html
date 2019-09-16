@@ -10,9 +10,13 @@ Moin
   <div class="form-group" *ngFor="let itm of dynKeys">
     <div *ngIf="!myForm.get(itm).controls">
       <label [for]="itm">{{ itm }}</label>
-      <input type="text" [id]="itm" [formControlName]="itm" />
+      <input
+        [type]="myForm.get(itm)?.type"
+        [id]="itm"
+        [formControlName]="itm"
+      />
       <div [hidden]="!myForm.get(itm).hasError('required')">
-        Enter a {{ itm }}
+        {{ myForm.get(itm).errormsg?.required }}
       </div>
     </div>
   </div>
