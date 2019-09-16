@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
-import { AutomaticFormBuilder } from 'ngx-automatic-formbuilder';
+import { AutomaticFormBuilder, IFormSettings } from 'ngx-automatic-formbuilder';
 
 @Component({
   selector: 'app-root',
