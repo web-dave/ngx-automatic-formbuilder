@@ -5,9 +5,27 @@ You can Pass in a Config object and it generates a FormGroup.
 
 ## How to install
 
-tbd.
+```sh
+npm i ngx-automatic-formbuilder
+```
 
 ## How to use
+
+import it into Your Module
+
+### import into AppModule
+
+```ts
+import { AutomaticFormbuilderModule } from 'projects/ngx-automatic-formbuilder/src/public-api';
+
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BrowserModule, AutomaticFormbuilderModule],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule {}
+```
 
 The config object looks similar to the FormBuilder config
 
@@ -21,9 +39,13 @@ export interface IFormSettings {
 }
 ```
 
-It can Handle SubGroups as well.
+Get `AutomaticFormBuilder` via DI and kick it off with your settings
 
-In my example i us this:
+```ts
+  constructor(builder: AutomaticFormBuilder) {
+    this.myForm = builder.setupForm(this.settings);
+  }
+```
 
 ### FormSettings
 
@@ -46,6 +68,10 @@ settings: IFormSettings = {
   }
 };
 ```
+
+It can Handle SubGroups as well.
+
+In my example I use this:
 
 You can add the highly needed information to each FormControl to autogenerate the form in your template.
 
