@@ -9,40 +9,19 @@ import {
   AbstractControl
 } from '@angular/forms';
 import { Injectable } from '@angular/core';
-import { IFormSettings, IFormControlSettings } from './models';
+import { IFormSettings, IExtFormControlSettings } from './models';
 import { IExtFormControl } from './models/ExtendedFormControl.interface';
+import {
+  IFormArrayFn,
+  IFormControlFn,
+  IFormGroupFn
+} from './models/helper.interface';
 
 @Injectable()
 export class DynamicFormBuilder {
-  array: (
-    controlsConfig: any[],
-    validatorOrOpts?:
-      | ValidatorFn
-      | ValidatorFn[]
-      | AbstractControlOptions
-      | null,
-    asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null
-  ) => FormArray;
-  control: (
-    formState: any,
-    validatorOrOpts?:
-      | ValidatorFn
-      | ValidatorFn[]
-      | AbstractControlOptions
-      | null,
-    asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null
-  ) => FormControl;
-  group: (
-    controlsConfig: {
-      [key: string]: any;
-    },
-    options?:
-      | AbstractControlOptions
-      | {
-          [key: string]: any;
-        }
-      | null
-  ) => FormGroup;
+  array: IFormArrayFn;
+  control: IFormControlFn;
+  group: IFormGroupFn;
 
   constructor(formbuilder: FormBuilder) {
     this.group = formbuilder.group;
@@ -62,18 +41,29 @@ export class DynamicFormBuilder {
   setupGroup(form: FormGroup, options: IFormSettings) {
     for (const opt in options) {
       if (Array.isArray(options[opt])) {
+        const controlOptions = options[opt] as [
+          any,
+          ValidatorFn[]?,
+          AsyncValidatorFn[]?,
+          IExtFormControlSettings?
+        ];
         let validate = false;
-        if (Array.isArray(options[opt][1])) {
+        let asyncValidate = false;
+        if (Array.isArray(controlOptions[1])) {
           validate = true;
         }
+        if (Array.isArray(controlOptions[2])) {
+          asyncValidate = true;
+        }
         const ctrl = new FormControl(
-          options[opt][0],
-          validate ? options[opt][1] : null
+          controlOptions[0],
+          validate ? controlOptions[1] : [],
+          asyncValidate ? controlOptions[2] : []
         ) as IExtFormControl;
-        if (this.isObject(options[opt][2])) {
-          const ext: IFormControlSettings = options[
+        if (this.isObject(controlOptions[3])) {
+          const ext: IExtFormControlSettings = options[
             opt
-          ][2] as IFormControlSettings;
+          ][3] as IExtFormControlSettings;
           ctrl.errormsg = ext.errormsg;
           ctrl.type = ext.type;
           ctrl.label = ext.label;

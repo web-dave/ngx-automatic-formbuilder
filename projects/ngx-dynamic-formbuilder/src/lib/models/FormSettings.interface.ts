@@ -1,6 +1,8 @@
-import { ValidatorFn } from '@angular/forms';
-import { IFormControlSettings } from './FormControlSettings.interface';
+import { ValidatorFn, AsyncValidatorFn } from '@angular/forms';
+import { IExtFormControlSettings } from './FormControlSettings.interface';
 
 export interface IFormSettings {
-  [key: string]: [any, ValidatorFn[]?, IFormControlSettings?] | IFormSettings;
+  [key: string]:
+    | [any, ValidatorFn[]?, AsyncValidatorFn[]?, IExtFormControlSettings?]
+    | IFormSettings;
 }
