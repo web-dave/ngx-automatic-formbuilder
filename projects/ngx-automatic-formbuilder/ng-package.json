@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../dist/ngx-dynamic-formbuilder",
+  "dest": "../../dist/ngx-automatic-formbuilder",
   "lib": {
     "entryFile": "src/public-api.ts"
   }

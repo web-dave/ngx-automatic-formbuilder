@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import {
   IFormSettings,
-  DynamicFormBuilder
-} from 'projects/ngx-dynamic-formbuilder/src/public-api';
-// import { DynamicFormBuilder, IFormSettings } from './dyn-form-builder.class';
+  AutomaticFormBuilder
+} from 'projects/ngx-automatic-formbuilder/src/public-api';
 
 @Component({
   selector: 'app-root',
@@ -37,7 +36,7 @@ export class AppComponent {
       }
     }
   };
-  constructor(private builder: DynamicFormBuilder) {
+  constructor(builder: AutomaticFormBuilder) {
     this.myForm = builder.setupForm(this.settings);
     console.log(this.myForm);
     this.dynKeys = Object.keys(this.myForm.controls);

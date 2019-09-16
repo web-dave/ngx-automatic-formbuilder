@@ -18,7 +18,7 @@ import {
 } from './models/helper.interface';
 
 @Injectable()
-export class DynamicFormBuilder {
+export class AutomaticFormBuilder {
   array: IFormArrayFn;
   control: IFormControlFn;
   group: IFormGroupFn;
