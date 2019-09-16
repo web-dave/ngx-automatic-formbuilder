@@ -15,18 +15,13 @@ export class AppComponent {
   myForm: FormGroup;
   dynKeys;
   settings: IFormSettings = {
-    title: [
+    user: [
       '',
       [Validators.required],
       [],
-      { type: 'number', errormsg: { required: 'Title is required!' } }
+      { type: 'number', errormsg: { required: 'User is required!' } }
     ],
-    subtitle: ['', []],
-    isbn: ['', []],
-    abstract: ['', []],
-    numPages: [0, []],
-    author: ['', []],
-    publisher: {
+    company: {
       name: ['', []],
       url: ['', []],
       address: {
